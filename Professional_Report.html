@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程选择系统 - 项目汇报</title>
+    <style>
+        :root {
+            --aliyun-blue: #0064C8;
+            --aliyun-dark-blue: #0050A0;
+            --text-main: #333333;
+            --text-secondary: #666666;
+            --bg-white: #FFFFFF;
+            --bg-light: #F5F7FA;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background-color: #333;
+            color: var(--text-main);
+            overflow: hidden; /* Hide scrollbars for presentation mode */
+        }
+
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #333;
+        }
+
+        .slide {
+            width: 1280px; /* 16:9 aspect ratio standard */
+            height: 720px;
+            background-color: var(--bg-white);
+            position: relative;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            padding: 40px 60px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--aliyun-blue);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--aliyun-blue);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+
+        .page-number {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: var(--aliyun-blue);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 36px;
+            color: var(--text-main);
+            margin-bottom: 30px;
+            border-left: 8px solid var(--aliyun-blue);
+            padding-left: 20px;
+        }
+
+        p, li {
+            font-size: 24px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--aliyun-blue);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+
+        .highlight {
+            color: var(--aliyun-blue);
+            font-weight: bold;
+        }
+
+        .box-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: space-between;
+        }
+
+        .box {
+            flex: 1;
+            background-color: var(--bg-light);
+            border: 1px solid #E1E4E8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .box h3 {
+            font-size: 24px;
+            color: var(--aliyun-blue);
+            margin-bottom: 10px;
+        }
+
+        .box p {
+            font-size: 18px;
+        }
+
+        .placeholder-img {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            border: 2px dashed #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        /* Cover Slide Specifics */
+        .cover {
+            background: linear-gradient(135deg, var(--aliyun-blue) 0%, var(--aliyun-dark-blue) 100%);
+            color: white;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover h1 {
+            color: white;
+            font-size: 64px;
+            margin-bottom: 30px;
+        }
+
+        .cover h2 {
+            color: rgba(255,255,255,0.9);
+            border: none;
+            font-size: 32px;
+        }
+        
+        .cover p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Speaker Notes */
+        .notes {
+            display: none; /* Visible only in print or specific view */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.95);
+            padding: 10px;
+            font-size: 14px;
+            border-top: 1px solid #ccc;
+            color: #333;
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-container">
+
+    <!-- Slide 1: Cover -->
+    <div class="slide active cover">
+        <h1>课程选择系统</h1>
+        <h2>Course Selection System</h2>
+        <p>基于 Spring Boot 3.2 的现代化选课解决方案</p>
+        <p style="margin-top: 50px; font-size: 20px;">汇报人：开发团队 | 日期：2025-12-16</p>
+        <div class="notes">演讲备注：大家好，我是开发团队代表。今天向大家汇报我们的"课程选择系统"项目，这是一个旨在解决传统选课痛点、提升教务管理效率的现代化Web应用。</div>
+    </div>
+
+    <!-- ================= Section 1: Project Overview (3 Slides) ================= -->
+
+    <!-- Slide 2: Project Overview - Problem -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>项目总览</span></div>
+            <div class="page-number">02 / 20</div>
+        </div>
+        <div class="content">
+            <h2>痛点分析：传统选课的困境</h2>
+            <ul>
+                <li><span class="highlight">资源冲突：</span> 教室与时间安排极易发生重叠，人工排课效率低。</li>
+                <li><span class="highlight">规则复杂：</span> 学分上限控制、先修课程检查难以通过人工实时验证。</li>
+                <li><span class="highlight">信息孤岛：</span> 学生无法实时获取课程剩余容量，导致选课失败率高。</li>
+            </ul>
+            <div class="box-container">
+                <div class="box">
+                    <h3>效率低下</h3>
+                    <p>人工核对耗时耗力</p>
+                </div>
+                <div class="box">
+                    <h3>数据错误</h3>
+                    <p>规则执行不严格</p>
+                </div>
+                <div class="box">
+                    <h3>体验极差</h3>
+                    <p>学生端反馈滞后</p>
+                </div>
+            </div>
+        </div>
+        <div class="notes">演讲备注：首先看我们为什么要做这个系统。传统选课往往面临三大痛点：资源冲突难以检测、复杂的选课规则（如先修课）难以人工实时验证、以及信息不对称导致的学生体验差。</div>
+    </div>
+
+    <!-- Slide 3: Project Overview - Solution -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>项目总览</span></div>
+            <div class="page-number">03 / 20</div>
+        </div>
+        <div class="content">
+            <h2>解决方案：智能化选课平台</h2>
+            <p>构建一个全自动、规则驱动的选课管理系统。</p>
+            <ul>
+                <li><span class="highlight">实时校验：</span> 选课时自动检查时间冲突、容量和先修条件。</li>
+                <li><span class="highlight">规则引擎：</span> 强制执行21学分上限和课程依赖关系。</li>
+                <li><span class="highlight">角色分离：</span> 独立的管理员（教师）与学生端界面，权限清晰。</li>
+            </ul>
+            <div class="placeholder-img">
+                [系统首页截图：展示登录界面与清晰的角色入口]
+                <br>../images/login.png
+            </div>
+        </div>
+        <div class="notes">演讲备注：我们的解决方案是构建一个智能化的选课平台。核心在于"实时校验"——在学生点击选课的瞬间，系统自动完成时间、容量、先修课的三重检查，确保数据绝对准确。</div>
+    </div>
+
+    <!-- Slide 4: Project Overview - Value -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>项目总览</span></div>
+            <div class="page-number">04 / 20</div>
+        </div>
+        <div class="content">
+            <h2>核心价值：效率与体验的双重提升</h2>
+            <div class="box-container" style="margin-top: 10px;">
+                <div class="box" style="flex: 1.5;">
+                    <h3>管理效率提升 90%</h3>
+                    <p>自动排课查重，无需人工干预</p>
+                </div>
+                <div class="box" style="flex: 1.5;">
+                    <h3>规则执行率 100%</h3>
+                    <p>杜绝违规选课，确保教学秩序</p>
+                </div>
+            </div>
+            <ul style="margin-top: 30px;">
+                <li><span class="highlight">对于学校：</span> 降低教务管理成本，数据可追溯。</li>
+                <li><span class="highlight">对于学生：</span> 界面直观，反馈即时，不再因为信息滞后错失课程。</li>
+            </ul>
+        </div>
+        <div class="notes">演讲备注：这套系统带来的价值是显著的。对于教务管理，效率提升了90%以上，完全杜绝了违规选课；对于学生，提供了即时反馈的现代化体验，消除了选课焦虑。</div>
+    </div>
+
+    <!-- ================= Section 2: Tech Stack (3 Slides) ================= -->
+
+    <!-- Slide 5: Tech Stack - Backend -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>技术栈</span></div>
+            <div class="page-number">05 / 20</div>
+        </div>
+        <div class="content">
+            <h2>后端核心：稳健的 Spring 生态</h2>
+            <ul>
+                <li><span class="highlight">框架：</span> Spring Boot 3.2.0 - 快速开发，自动配置。</li>
+                <li><span class="highlight">安全：</span> Spring Security - 基于 BCrypt 的密码加密与角色鉴权。</li>
+                <li><span class="highlight">ORM：</span> Spring Data JPA (Hibernate) - 高效的数据库交互。</li>
+            </ul>
+            <div class="box-container">
+                <div class="box">
+                    <h3>Java 17+</h3>
+                    <p>LTS 版本保障</p>
+                </div>
+                <div class="box">
+                    <h3>Maven</h3>
+                    <p>依赖管理</p>
+                </div>
+            </div>
+        </div>
+        <div class="notes">演讲备注：技术层面，我们后端采用了稳健的Spring Boot 3.2架构。利用Spring Security保障数据安全，JPA简化数据库操作，确保了系统的高可用性和易维护性。</div>
+    </div>
+
+    <!-- Slide 6: Tech Stack - Frontend -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>技术栈</span></div>
+            <div class="page-number">06 / 20</div>
+        </div>
+        <div class="content">
+            <h2>前端技术：原生与现代化的融合</h2>
+            <p>摒弃繁重的框架，回归高效的原生 Web 技术。</p>
+            <ul>
+                <li><span class="highlight">核心：</span> HTML5 + CSS3 + Vanilla JavaScript (ES6+)。</li>
+                <li><span class="highlight">通信：</span> Fetch API - 轻量级的异步数据交互。</li>
+                <li><span class="highlight">样式：</span> CSS Variables - 实现一键换肤与一致的设计系统。</li>
+            </ul>
+            <div class="placeholder-img" style="height: 200px;">
+                [代码片段：展示 fetch 请求或 CSS 变量定义]
+            </div>
+        </div>
+        <div class="notes">演讲备注：前端方面，我们选择了轻量级的原生技术栈。没有引入沉重的第三方框架，而是利用ES6+和Fetch API实现高效交互，这使得页面加载极快，且易于定制和维护。</div>
+    </div>
+
+    <!-- Slide 7: Tech Stack - Data & Tools -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>技术栈</span></div>
+            <div class="page-number">07 / 20</div>
+        </div>
+        <div class="content">
+            <h2>数据存储与开发工具</h2>
+            <div class="box-container">
+                <div class="box">
+                    <h3>MySQL 8.0</h3>
+                    <p>关系型数据库，强一致性事务支持</p>
+                </div>
+                <div class="box">
+                    <h3>JUnit 5</h3>
+                    <p>单元测试，保障业务逻辑正确性</p>
+                </div>
+                <div class="box">
+                    <h3>Git</h3>
+                    <p>版本控制，规范的开发流程</p>
+                </div>
+            </div>
+            <ul style="margin-top: 30px;">
+                <li><span class="highlight">DataInitializer：</span> 启动时自动加载测试数据，开箱即用。</li>
+                <li><span class="highlight">Run Scripts：</span> 封装好的 .bat 脚本，一键启动环境。</li>
+            </ul>
+        </div>
+        <div class="notes">演讲备注：数据层使用MySQL 8.0确保事务一致性。我们还集成了JUnit 5进行自动化测试，并编写了自动化脚本，实现了"一键启动、开箱即用"的便捷部署体验。</div>
+    </div>
+
+    <!-- ================= Section 3: Architecture (4 Slides) ================= -->
+
+    <!-- Slide 8: Architecture - High Level -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>系统架构</span></div>
+            <div class="page-number">08 / 20</div>
+        </div>
+        <div class="content">
+            <h2>分层架构设计</h2>
+            <p>遵循经典的 MVC 分层模式，职责单一，耦合度低。</p>
+            <ul>
+                <li><span class="highlight">Controller Layer：</span> 处理 HTTP 请求，参数校验。</li>
+                <li><span class="highlight">Service Layer：</span> 核心业务逻辑（选课规则、学分计算）。</li>
+                <li><span class="highlight">Repository Layer：</span> 数据持久化接口。</li>
+            </ul>
+            <div class="placeholder-img">
+                [架构图：Client -> Controller -> Service -> Repository -> Database]
+            </div>
+        </div>
+        <div class="notes">演讲备注：架构上，我们严格遵循MVC分层设计。Controller层负责路由，Service层封装核心业务逻辑（如学分计算），Repository层处理数据，层级分明，便于扩展。</div>
+    </div>
+
+    <!-- Slide 9: Architecture - Security Flow -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>系统架构</span></div>
+            <div class="page-number">09 / 20</div>
+        </div>
+        <div class="content">
+            <h2>安全架构</h2>
+            <ul>
+                <li><span class="highlight">认证 (Authentication)：</span> 基于表单的登录认证。</li>
+                <li><span class="highlight">授权 (Authorization)：</span> 
+                    <ul>
+                        <li>ROLE_TEACHER：课程管理权限。</li>
+                        <li>ROLE_STUDENT：选课与查询权限。</li>
+                    </ul>
+                </li>
+                <li><span class="highlight">防护：</span> CSRF 防护，密码加盐哈希存储。</li>
+            </ul>
+            <div class="placeholder-img" style="height: 250px;">
+                [安全流程图：Request -> FilterChain -> AuthenticationProvider -> UserDetails]
+            </div>
+        </div>
+        <div class="notes">演讲备注：安全是系统的基石。我们实现了基于角色的访问控制（RBAC），严格区分教师和学生权限，并对所有敏感数据进行加密存储，确保系统安全可靠。</div>
+    </div>
+
+    <!-- Slide 10: Architecture - Business Flow -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>系统架构</span></div>
+            <div class="page-number">10 / 20</div>
+        </div>
+        <div class="content">
+            <h2>核心业务流：选课过程</h2>
+            <ol style="font-size: 24px; line-height: 1.8; margin-left: 20px;">
+                <li><span class="highlight">1. 提交请求：</span> 学生发起选课申请。</li>
+                <li><span class="highlight">2. 资格检查：</span> 系统检查是否已修先修课。</li>
+                <li><span class="highlight">3. 冲突检测：</span> 检查时间表是否有重叠。</li>
+                <li><span class="highlight">4. 容量锁定：</span> 检查剩余名额并锁定。</li>
+                <li><span class="highlight">5. 事务提交：</span> 更新数据库，生成选课记录。</li>
+            </ol>
+            <div class="notes">演讲备注：这是系统的核心业务流——选课。从提交请求到最终事务提交，系统按顺序执行资格、冲突、容量三道关卡的原子性检查，任何一环失败都会回滚，保证数据一致性。</div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Architecture - Deployment -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>系统架构</span></div>
+            <div class="page-number">11 / 20</div>
+        </div>
+        <div class="content">
+            <h2>部署架构与目录规范</h2>
+            <p>极简的目录结构，利于维护与迁移。</p>
+            <div class="box-container">
+                <div class="box">
+                    <h3>./src</h3>
+                    <p>源码与资源<br>(Source Code)</p>
+                </div>
+                <div class="box">
+                    <h3>./run</h3>
+                    <p>运行脚本<br>(Executables)</p>
+                </div>
+                <div class="box">
+                    <h3>./doc</h3>
+                    <p>文档资料<br>(Documentation)</p>
+                </div>
+            </div>
+            <ul style="margin-top: 30px;">
+                <li><span class="highlight">独立性：</span> 运行时不依赖 IDE，仅需 JRE。</li>
+                <li><span class="highlight">便携性：</span> 绿色版发布，解压即用。</li>
+            </ul>
+        </div>
+        <div class="notes">演讲备注：我们采用了极简的部署架构。项目严格分为src、run、doc三个目录，实现了代码、运行环境、文档的物理分离，支持绿色解压即用，极大地降低了部署门槛。</div>
+    </div>
+
+    <!-- ================= Section 4: Relationship Modeling (4 Slides) ================= -->
+
+    <!-- Slide 12: Modeling - ER Concept -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>关系建模</span></div>
+            <div class="page-number">12 / 20</div>
+        </div>
+        <div class="content">
+            <h2>实体关系概览 (ERD)</h2>
+            <p>系统的三个核心实体及其交互。</p>
+            <ul>
+                <li><span class="highlight">User (用户)：</span> 包含学生和教师，通过 Role 区分。</li>
+                <li><span class="highlight">Course (课程)：</span> 包含时间、地点、容量、学分等属性。</li>
+                <li><span class="highlight">Enrollment (选课)：</span> 连接用户与课程的关联实体。</li>
+            </ul>
+            <div class="placeholder-img">
+                [ER图：User (1) ---- (*) Enrollment (*) ---- (1) Course]
+            </div>
+        </div>
+        <div class="notes">演讲备注：进入关系建模部分。系统核心围绕User（用户）、Course（课程）以及连接两者的Enrollment（选课记录）三个实体展开，结构清晰，易于理解。</div>
+    </div>
+
+    <!-- Slide 13: Modeling - Many-to-Many -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>关系建模</span></div>
+            <div class="page-number">13 / 20</div>
+        </div>
+        <div class="content">
+            <h2>多对多关系的实现</h2>
+            <p>学生与课程之间是典型的多对多关系。</p>
+            <ul>
+                <li><span class="highlight">挑战：</span> 直接关联无法记录"选课时间"、"成绩"等额外信息。</li>
+                <li><span class="highlight">方案：</span> 引入 <code>Enrollment</code> 作为关联实体（Join Entity）。</li>
+                <li><span class="highlight">优势：</span> 解耦了学生与课程，便于扩展更多选课属性。</li>
+            </ul>
+            <div class="box-container">
+                <div class="box">
+                    <h3>Student</h3>
+                    <p>ID, Name</p>
+                </div>
+                <div class="box" style="background: #e6f7ff; border-color: var(--aliyun-blue);">
+                    <h3>Enrollment</h3>
+                    <p>Student_ID, Course_ID, Date</p>
+                </div>
+                <div class="box">
+                    <h3>Course</h3>
+                    <p>ID, Title</p>
+                </div>
+            </div>
+        </div>
+        <div class="notes">演讲备注：为了优雅地处理学生与课程的多对多关系，我们引入了Enrollment实体。这不仅解决了关联问题，还为未来扩展成绩录入、选课状态等属性预留了空间。</div>
+    </div>
+
+    <!-- Slide 14: Modeling - Self-Referencing -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>关系建模</span></div>
+            <div class="page-number">14 / 20</div>
+        </div>
+        <div class="content">
+            <h2>先修课程设计：自关联</h2>
+            <p>课程之间的依赖关系通过自关联（Self-Reference）实现。</p>
+            <ul>
+                <li><span class="highlight">模型：</span> Course 表中包含 <code>prerequisites</code> 字段。</li>
+                <li><span class="highlight">关系：</span> Many-to-Many 自关联。</li>
+                <li><span class="highlight">逻辑：</span> 选课前递归检查 <code>prerequisites</code> 中的课程是否已在 <code>completed_courses</code> 中。</li>
+            </ul>
+            <div class="placeholder-img" style="height: 200px;">
+                [图示：Course A (Advanced) ---> Depends on ---> Course B (Basic)]
+            </div>
+        </div>
+        <div class="notes">演讲备注：系统的一个难点是先修课逻辑。我们利用Course表的自关联设计，成功建模了复杂的课程依赖树，支持多级先修关系的自动校验。</div>
+    </div>
+
+    <!-- Slide 15: Modeling - Database Schema -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>关系建模</span></div>
+            <div class="page-number">15 / 20</div>
+        </div>
+        <div class="content">
+            <h2>数据库 Schema 设计</h2>
+            <pre style="background: #f4f4f4; padding: 20px; border-radius: 8px; font-size: 18px; color: #333;">
+Table: app_user
+- id (PK), username, password, role
+
+Table: course
+- id (PK), title, credits, capacity, schedule, teacher_id (FK)
+
+Table: course_prerequisites
+- course_id (FK), prerequisite_id (FK)
+
+Table: enrollment
+- id (PK), user_id (FK), course_id (FK), created_at
+            </pre>
+            <p style="margin-top: 20px;">采用规范化设计（3NF），减少数据冗余。</p>
+        </div>
+        <div class="notes">演讲备注：这是我们的数据库Schema设计。通过四张核心表和严格的外键约束，我们实现了第三范式（3NF），保证了数据的完整性和低冗余。</div>
+    </div>
+
+    <!-- ================= Section 5: Features & Improvements (6 Slides) ================= -->
+
+    <!-- Slide 16: Features - Credit Limit -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>核心功能</span></div>
+            <div class="page-number">16 / 20</div>
+        </div>
+        <div class="content">
+            <h2>亮点功能 1：21 学分智能上限</h2>
+            <ul>
+                <li><span class="highlight">规则：</span> 每个学生每学期选课总学分不得超过 21 分。</li>
+                <li><span class="highlight">实现：</span> 
+                    <ul>
+                        <li>Service 层在每次选课前计算 <code>currentCredits + newCourseCredits</code>。</li>
+                        <li>若 > 21，抛出异常并阻断事务。</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="placeholder-img" style="height: 250px;">
+                [截图：前端弹出警告 'Cannot enroll: Credits exceed limit of 21']
+            </div>
+        </div>
+        <div class="notes">演讲备注：核心功能展示。首先是"21学分智能上限"。系统在Service层强制拦截超额选课，这不仅是简单的数字限制，更是对教学质量的系统级保障。</div>
+    </div>
+
+    <!-- Slide 17: Features - Prerequisite Check -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>核心功能</span></div>
+            <div class="page-number">17 / 20</div>
+        </div>
+        <div class="content">
+            <h2>亮点功能 2：先修课程依赖图</h2>
+            <ul>
+                <li><span class="highlight">场景：</span> 选修 "数据结构" 前必须先修 "Java程序设计"。</li>
+                <li><span class="highlight">流程：</span> 
+                    1. 获取目标课程的 Prerequisite 列表。<br>
+                    2. 查询学生历史已修课程。<br>
+                    3. 集合比对，缺失任一前置课即报错。
+                </li>
+            </ul>
+            <div class="box-container">
+                <div class="box" style="border: 2px solid green;">
+                    <h3>Check Passed</h3>
+                    <p>允许选课</p>
+                </div>
+                <div class="box" style="border: 2px solid red;">
+                    <h3>Check Failed</h3>
+                    <p>提示缺课名称</p>
+                </div>
+            </div>
+        </div>
+        <div class="notes">演讲备注：其次是先修课依赖检查。系统通过构建课程依赖图，自动比对学生历史成绩。如果尝试跳过基础课直接选修高阶课，系统会明确告知缺失的先修课程名称。</div>
+    </div>
+
+    <!-- Slide 18: Features - Conflict Detection -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>核心功能</span></div>
+            <div class="page-number">18 / 20</div>
+        </div>
+        <div class="content">
+            <h2>亮点功能 3：时间冲突自动检测</h2>
+            <ul>
+                <li><span class="highlight">算法：</span> 字符串匹配与时间段重叠判断。</li>
+                <li><span class="highlight">细节：</span> 解析 "Mon 10:00-12:00" 格式，比对现有课表。</li>
+                <li><span class="highlight">反馈：</span> 冲突时直接高亮显示冲突课程，避免人工排课失误。</li>
+            </ul>
+            <div class="placeholder-img">
+                [截图：选课失败提示 'Time conflict with existing course: Math 101']
+            </div>
+        </div>
+        <div class="notes">演讲备注：第三个亮点是时间冲突自动检测。系统能够解析复杂的时间字符串，精确判断课程时段是否重叠，从根本上消除了"一鱼两吃"的上课冲突问题。</div>
+    </div>
+
+    <!-- Slide 19: Features - UI/UX -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>核心功能</span></div>
+            <div class="page-number">19 / 20</div>
+        </div>
+        <div class="content">
+            <h2>用户体验：响应式与可视化</h2>
+            <ul>
+                <li><span class="highlight">响应式布局：</span> Flexbox + Grid，适配 PC 与移动端。</li>
+                <li><span class="highlight">即时反馈：</span> 异步加载，操作无刷新，状态实时更新。</li>
+                <li><span class="highlight">可视化课表：</span> 将选课数据渲染为直观的周视图表格。</li>
+            </ul>
+            <div class="placeholder-img">
+                [截图：美观的学生端课表界面，卡片式布局]
+            </div>
+        </div>
+        <div class="notes">演讲备注：在体验端，我们实现了完全的响应式设计。无论是PC还是手机，用户都能获得一致的流畅体验。可视化的周视图课表，让学生对自己的日程一目了然。</div>
+    </div>
+
+    <!-- Slide 20: Improvements & Roadmap -->
+    <div class="slide">
+        <div class="header">
+            <div class="logo">CourseSystem <span>未来展望</span></div>
+            <div class="page-number">20 / 20</div>
+        </div>
+        <div class="content">
+            <h2>不足与未来改进计划</h2>
+            <div class="box-container">
+                <div class="box">
+                    <h3>当前不足</h3>
+                    <p style="font-size: 16px;">UI 交互较基础<br>缺乏候补队列 (Waitlist)<br>报表功能单一</p>
+                </div>
+                <div class="box" style="background: #e6f7ff;">
+                    <h3>2.0 版本规划</h3>
+                    <p style="font-size: 16px;">迁移至 React/Vue 前端<br>引入 Redis 缓存热点数据<br>增加数据可视化大屏</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; text-align: center; font-weight: bold; color: var(--aliyun-blue);">
+                持续迭代，打造更完美的教务生态。
+            </p>
+        </div>
+        <div class="notes">演讲备注：最后，我们清醒地认识到系统仍有改进空间。未来我们将引入React重构前端，使用Redis优化高并发选课体验，并增加候补队列功能，致力于打造更完美的教务生态。谢谢大家！</div>
+    </div>
+
+</div>
+
+<div class="controls">
+    使用 ← → 键盘方向键切换幻灯片
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        if (index >= slides.length) currentSlide = 0;
+        if (index < 0) currentSlide = slides.length - 1;
+        slides[currentSlide].classList.add('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+            currentSlide++;
+            showSlide(currentSlide);
+        } else if (e.key === 'ArrowLeft') {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+    });
+
+    // Initialize
+    showSlide(0);
+</script>
+
+</body>
+</html>

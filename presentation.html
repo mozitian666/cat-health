@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小猫健康 (Cat Health) - 项目汇报</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/theme/white.css" id="theme">
+    <style>
+        :root {
+            --primary-color: #22c55e; /* Green-500 */
+            --secondary-color: #3b82f6; /* Blue-500 */
+            --text-color: #333;
+            --bg-color: #f8fafc;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+        }
+
+        .reveal {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--text-color);
+        }
+
+        .reveal h1, .reveal h2, .reveal h3 {
+            text-transform: none;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .reveal h1 { font-size: 2.5em; margin-bottom: 0.5em; color: var(--primary-color); }
+        .reveal h2 { font-size: 1.6em; color: var(--secondary-color); border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        
+        .reveal ul {
+            display: block;
+            text-align: left;
+            font-size: 0.8em;
+            margin-left: 2em;
+        }
+        
+        .reveal li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            font-size: 0.7em;
+        }
+        
+        .card h3 {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .emoji-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* Cover Slide */
+        .cover-slide h1 {
+            font-size: 3em;
+            background: linear-gradient(120deg, #22c55e, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cover-slide p.subtitle {
+            font-size: 1.2em;
+            color: #64748b;
+            margin-top: 20px;
+        }
+        .cover-footer {
+            margin-top: 100px;
+            font-size: 0.8em;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Slide 1: Cover -->
+            <section class="cover-slide">
+                <h1>小猫健康</h1>
+                <p class="subtitle">基于 AI 识别与游戏化互动的饮食管理系统</p>
+                <p>让健康管理像养电子宠物一样有趣</p>
+                <div class="cover-footer">
+                    <p>汇报人：李天健</p>
+                    <p>2025年12月31日</p>
+                </div>
+            </section>
+
+            <!-- Slide 2: Table of Contents -->
+            <section>
+                <h2>目录 / Contents</h2>
+                <div style="display: flex; justify-content: center; margin-top: 40px;">
+                    <ul style="list-style: none; font-size: 1em;">
+                        <li>🚀 <strong>1. 项目背景</strong> (Project Background)</li>
+                        <li>💡 <strong>2. 拟用方法</strong> (Proposed Methodology)</li>
+                        <li>🛠️ <strong>3. 技术路线</strong> (Technical Roadmap)</li>
+                        <li>📊 <strong>4. 可行性分析</strong> (Feasibility Analysis)</li>
+                        <li>✨ <strong>5. 结果分享</strong> (Results & Demo)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 3: Background - Pain Points -->
+            <section>
+                <h2>1.1 项目背景 - 研发意义</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <span class="emoji-icon">😰</span>
+                        <h3>健康焦虑与管理痛点</h3>
+                        <ul>
+                            <li>现代人亚健康、肥胖问题日益严重</li>
+                            <li>传统应用（如 <a href="https://www.keep.com/" target="_blank" style="color: #3b82f6;"></a>Keep</a>, <a href="https://www.apple.com/ios/health/" target="_blank" style="color: #3b82f6;">Apple Health</a>）操作繁琐</li>
+                            <li>"记录"本身反人性，枯燥导致高流失率</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <span class="emoji-icon">🎮</span>
+                        <h3>游戏化 (Gamification) 潜力</h3>
+                        <ul>
+                            <li>将枯燥管理转化为有趣的“养成游戏”</li>
+                            <li>建立情感羁绊，激励持续打卡</li>
+                            <li>变被动记录为<span class="highlight">主动投喂</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: Background - Current Status -->
+            <section>
+                <h2>1.2 项目背景 - 国内外现状</h2>
+                <div style="font-size: 0.8em; text-align: left;">
+                    <p><strong>🌍 国外现状</strong></p>
+                    <ul>
+                        <li><strong><a href="https://www.noom.com/" target="_blank" style="color: #3b82f6;">Noom</a></strong>: 心理学干预，缺乏趣味互动</li>
+                        <li><strong><a href="https://habitica.com/" target="_blank" style="color: #3b82f6;">Habitica</a></strong>: RPG 风格，但非专注饮食识别</li>
+                    </ul>
+                    <p style="margin-top: 20px;"><strong>🇨🇳 国内现状</strong></p>
+                    <ul>
+                        <li><strong>薄荷/<a href="https://www.keep.com/" target="_blank" style="color: #3b82f6;">Keep</a></strong>: 工具属性重，缺乏温度</li>
+                        <li><strong>电子宠物类</strong>: 纯娱乐，未挂钩现实数据</li>
+                    </ul>
+                    <div class="fragment" style="margin-top: 20px; background: #fee2e2; padding: 15px; border-radius: 8px; color: #b91c1c;">
+                        <strong>🚨 存在的问题：</strong> 录入成本高、反馈延迟、同质化严重
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: Methodology -->
+            <section>
+                <h2>2. 拟用方法 - 核心理念</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <h3>🤖 AI 赋能效率</h3>
+                        <p>计算机视觉 (CV) 技术实现“拍照即记录”</p>
+                        <p class="highlight">录入时间：1分钟 → 10秒</p>
+                    </div>
+                    <div class="card">
+                        <h3>❤️ 情感化反馈</h3>
+                        <p><strong>映射机制：</strong>健康行为 → 小猫成长 (经验/毛色)</p>
+                        <p><strong>负反馈：</strong>暴饮暴食 → 小猫变胖/生病</p>
+                    </div>
+                    <div class="card">
+                        <h3>🔄 闭环系统</h3>
+                        <p>记录 (Input) → AI 分析 → 小猫状态 (Output) → 激励 (Feedback)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: Technical Roadmap - Architecture -->
+            <section>
+                <h2>3.1 技术路线 - 架构设计</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.8em;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <h3 style="color: #3b82f6;">🖥️ 前端 (Client)</h3>
+                        <ul>
+                            <li><strong>框架</strong>: React + Vite</li>
+                            <li><strong>UI</strong>: TailwindCSS + Lucide Icons</li>
+                            <li><strong>平台</strong>: Web + Electron (桌面端)</li>
+                        </ul>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        <h3 style="color: #22c55e;">⚙️ 后端 (Server)</h3>
+                        <ul>
+                            <li><strong>环境</strong>: Node.js + Express</li>
+                            <li><strong>数据库</strong>: SQLite / MySQL (Sequelize)</li>
+                            <li><strong>服务</strong>: Nginx 反向代理</li>
+                        </ul>
+                    </div>
+                    <div style="grid-column: span 2; background: #f1f5f9; padding: 15px; border-radius: 10px;">
+                        <strong>🚀 部署运维</strong>: Docker 容器化 + PM2 进程守护 + Linux (Ubuntu)
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: Technical Roadmap - Features -->
+            <section>
+                <h2>3.2 技术路线 - 核心功能</h2>
+                <ul style="font-size: 0.85em;">
+                    <li class="fragment">
+                        <strong>📸 AI 饮食识别模块</strong>
+                        <br>图像上传 → 预处理 → AI 接口调用 → 返回营养数据
+                    </li>
+                    <li class="fragment" style="margin-top: 20px;">
+                        <strong>🐱 电子宠物状态机 (核心)</strong>
+                        <br>数值模型：Energy (活力), Weight (体重), Exp (经验)
+                        <div style="background: #ecfdf5; padding: 10px; border-radius: 5px; margin-top: 5px; color: #047857; font-size: 0.9em;">
+                            Logic: Drink Water → Energy +10 | High Protein → EXP +2
+                        </div>
+                    </li>
+                    <li class="fragment" style="margin-top: 20px;">
+                        <strong>📊 可视化数据看板</strong>
+                        <br>Chart.js 绘制营养环形图，实时展示三大营养素比例
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Slide 8: Feasibility -->
+            <section>
+                <h2>4. 可行性分析</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <h3>🛠️ 技术可行性</h3>
+                        <ul>
+                            <li>前后端分离架构成熟</li>
+                            <li>AI 识别 API 普及且低成本</li>
+                            <li>全流程 Docker 部署已验证</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>💰 经济可行性</h3>
+                        <ul>
+                            <li>开源技术栈，零授权费</li>
+                            <li>轻量级服务器成本低</li>
+                            <li>增值服务商业模式清晰</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>👆 操作可行性</h3>
+                        <ul>
+                            <li>三段式极简导航</li>
+                            <li>拍照上传降低门槛</li>
+                            <li>符合直觉的交互设计</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: Results -->
+            <section>
+                <h2>5. 结果分享 - 成果展示</h2>
+                <div style="display: flex; gap: 30px; align-items: flex-start;">
+                    <div style="flex: 1; font-size: 0.8em; text-align: left;">
+                        <p><strong>✨ 系统界面</strong></p>
+                        <ul>
+                            <li>Dashboard: 清新配色，直观展示余额</li>
+                            <li>互动中心: 动态小猫，喝水/玩耍实时反馈</li>
+                        </ul>
+                        <p><strong>🔥 核心亮点</strong></p>
+                        <ul>
+                            <li>秒级响应 (AI + 数据同步)</li>
+                            <li>情感连接: "为了小猫升级多喝水"</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: Reflection & Outlook -->
+            <section>
+                <h2>6. 反思与展望</h2>
+                <div class="card-container">
+                    <div class="card" style="border-left: 5px solid #ef4444;">
+                        <h3>🤔 不足与反思</h3>
+                        <ul>
+                            <li><strong>功能单一</strong>：目前仅支持饮食记录与简单互动，缺乏运动数据同步。</li>
+                            <li><strong>生态封闭</strong>：缺乏好友系统，用户容易产生“单机游戏”的孤独感。</li>
+                            <li><strong>AI 精度</strong>：对于复杂中餐的卡路里估算仍有偏差。</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="border-left: 5px solid #22c55e;">
+                        <h3>🌱 未来展望 (对标蚂蚁森林)</h3>
+                        <ul>
+                            <li><strong>社交互动</strong>：好友排行榜、去好友家“偷”能量。</li>
+                            <li><strong>公益联动</strong>：小猫养大后，可兑换真实的流浪猫救助物资（如猫粮捐赠）。</li>
+                            <li><strong>多维接入</strong>：接入智能手表，步数/睡眠直接转化为小猫的“exp”值。</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: References -->
+            <section>
+                <h2>7. 参考文献 (References)</h2>
+                <div style="font-size: 0.55em; text-align: left; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <ul style="list-style-type: decimal;">
+                        <li>
+                            <strong>World Health Organization (WHO).</strong> (2024). <em>Obesity and overweight</em>. Retrieved from <a href="https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight" target="_blank" style="color: #3b82f6;">who.int</a>. 
+                            <span style="color: #64748b;">(Highlighting the global rise in obesity, with over 1 billion people living with obesity worldwide).</span>
+                        </li>
+                        <li>
+                            <strong>World Obesity Federation.</strong> (2024). <em>World Obesity Atlas 2024</em>. Retrieved from <a href="https://www.worldobesity.org/news/world-obesity-atlas-2024" target="_blank" style="color: #3b82f6;">worldobesity.org</a>. 
+                            <span style="color: #64748b;">(Projecting that over half of the global population will be overweight or obese by 2035 if current trends continue).</span>
+                        </li>
+                        <li>
+                            <strong>The Lancet eClinicalMedicine.</strong> (2024). <em>Effect of digital health applications with or without gamification on physical activity and cardiometabolic risk factors: a systematic review and meta-analysis</em>. <a href="https://www.thelancet.com/journals/eclinm/article/PIIS2589-5370(24)00377-8/fulltext" target="_blank" style="color: #3b82f6;">doi: 10.1016/j.eclinm.2024.102636</a>. 
+                            <span style="color: #64748b;">(Finding that gamified apps show improvements in physical activity and adiposity measures compared to non-gamified ones).</span>
+                        </li>
+                        <li>
+                            <strong>Scientific Reports.</strong> (2024). <em>The regulatory status of health apps that employ gamification</em>. <a href="https://www.nature.com/articles/s41598-024-71808-2" target="_blank" style="color: #3b82f6;">Nature.com</a>. 
+                            <span style="color: #64748b;">(Analyzing the market landscape of gamified health apps and their potential for user engagement).</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Slide 12: Thank You -->
+            <section style="text-align: center;">
+                <h1 style="color: var(--secondary-color);">感谢观看</h1>
+                <p style="font-size: 1.5em; margin-top: 50px;">Q & A</p>
+                <p style="color: #94a3b8; margin-top: 100px;">小猫健康 (Cat Health)</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            center: true,
+            hash: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            // More info https://github.com/hakimel/reveal.js#configuration
+        });
+    </script>
+</body>
+</html>
