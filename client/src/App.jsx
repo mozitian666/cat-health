@@ -4,6 +4,8 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Upload from './pages/Upload';
 import Plan from './pages/Plan';
+import Shop from './pages/Shop';
+import Leaderboard from './pages/Leaderboard';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="upload" element={<Upload />} />
           <Route path="cat" element={<Plan />} />
+          <Route path="shop" element={<Shop />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ import React from 'react';
 const CatDisplay = ({ cat }) => {
   if (!cat) return <div className="animate-pulse bg-gray-200 h-64 rounded-xl"></div>;
 
-  const { level, weight, energy, furQuality, name, exp } = cat;
+  const { level, weight, energy, furQuality, name, exp, equippedItem } = cat;
 
   // Level Logic
   let maxExp = 100;
@@ -27,11 +27,29 @@ const CatDisplay = ({ cat }) => {
 
   return (
     <div className="bg-blue-50 rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
+      {/* Coins Display */}
+      <div className="absolute top-4 left-4 bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full flex items-center gap-1 shadow-sm border border-yellow-200 z-10">
+        <span className="text-lg">💰</span>
+        <span className="font-bold">{cat.coins || 0}</span>
+      </div>
+
       <h2 className="text-2xl font-bold text-gray-800 mb-4">{name} (Lv.{level})</h2>
       
       {/* Cat Visual */}
       <div className={`transition-all duration-500 flex items-center justify-center text-6xl relative ${sizeClass} ${colorClass} ${shapeClass}`}>
-        🐱
+        <span className="z-10">🐱</span>
+        
+        {/* Equipped Item Visual */}
+        {equippedItem === 'sunglasses' && (
+           <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl z-20">🕶️</div>
+        )}
+        {equippedItem === 'bow' && (
+           <div className="absolute -top-2 left-0 text-3xl z-20 rotate-[-20deg]">🎀</div>
+        )}
+        {equippedItem === 'crown' && (
+           <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 text-4xl z-20">👑</div>
+        )}
+
         {/* Status Indicators */}
         {energy < 30 && (
           <div className="absolute -top-4 -right-4 text-sm bg-red-500 text-white px-2 py-1 rounded-full animate-bounce">

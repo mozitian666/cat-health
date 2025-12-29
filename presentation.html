@@ -195,23 +195,25 @@
                 <h2>3.1 技术路线 - 架构设计</h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 0.8em;">
                     <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-                        <h3 style="color: #3b82f6;">🖥️ 前端 (Client)</h3>
+                        <h3 style="color: #3b82f6;"> 前端 (Mobile App)</h3>
                         <ul>
-                            <li><strong>框架</strong>: React + Vite</li>
-                            <li><strong>UI</strong>: TailwindCSS + Lucide Icons</li>
-                            <li><strong>平台</strong>: Web + Electron (桌面端)</li>
+                            
+                            <li><strong>开发语言</strong>: ArkTS</li>
+                            <li><strong>套件</strong>: 鸿蒙健康能力套件(Health Kit)</li>
+                            <li><strong>UI</strong>: ArkUI-X 跨平台</li>
+                            <li><strong>平台</strong>: 鸿蒙 NEXT 原生开发</li>
                         </ul>
                     </div>
                     <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                         <h3 style="color: #22c55e;">⚙️ 后端 (Server)</h3>
                         <ul>
-                            <li><strong>环境</strong>: Node.js + Express</li>
-                            <li><strong>数据库</strong>: SQLite / MySQL (Sequelize)</li>
-                            <li><strong>服务</strong>: Nginx 反向代理</li>
+                            <li><strong>语言/框架</strong>: Node.js + Express</li>
+                            <li><strong>数据库</strong>: MySQL</li>
+                            <li><strong>身份认证</strong>: OAuth 2.0 / OpenID Connect(支持微信、华为账号一键登录)</li>
                         </ul>
                     </div>
                     <div style="grid-column: span 2; background: #f1f5f9; padding: 15px; border-radius: 10px;">
-                        <strong>🚀 部署运维</strong>: Docker 容器化 + PM2 进程守护 + Linux (Ubuntu)
+                        <strong>🚀 特色能力</strong>: 利用鸿蒙分布式能力做端侧协同，后端专注数据聚合与 AI 分析
                     </div>
                 </div>
             </section>
@@ -272,17 +274,43 @@
             <!-- Slide 9: Results -->
             <section>
                 <h2>5. 结果分享 - 成果展示</h2>
-                <div style="display: flex; gap: 30px; align-items: flex-start;">
-                    <div style="flex: 1; font-size: 0.8em; text-align: left;">
-                        <p><strong>✨ 系统界面</strong></p>
-                        <ul>
-                            <li>Dashboard: 清新配色，直观展示余额</li>
-                            <li>互动中心: 动态小猫，喝水/玩耍实时反馈</li>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; font-size: 0.75em;">
+                    
+                    <!-- Left Column: Core Functional Modules -->
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color: var(--primary-color); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px;">🛠️ 核心功能模块</h3>
+                        <ul style="list-style: none; margin: 0; padding: 0;">
+                            <li style="margin-bottom: 12px;">
+                                <strong>📸 AI 智能识别</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">拍照即录入，自动分析热量与营养成分 (卡路里/蛋白质/碳水/脂肪)。</span>
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>📊 数据可视化</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">首页实时展示摄入进度、营养比例环形图及周报分析。</span>
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>📅 饮食计划管理</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">支持自定义每日饮食目标 (Plan)，生成个性化健康方案。</span>
+                            </li>
                         </ul>
-                        <p><strong>🔥 核心亮点</strong></p>
-                        <ul>
-                            <li>秒级响应 (AI + 数据同步)</li>
-                            <li>情感连接: "为了小猫升级多喝水"</li>
+                    </div>
+
+                    <!-- Right Column: Gamification & Interaction -->
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color: var(--secondary-color); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 15px;">🎮 游戏化互动体系</h3>
+                        <ul style="list-style: none; margin: 0; padding: 0;">
+                            <li style="margin-bottom: 12px;">
+                                <strong>🐱 电子宠物养成</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">状态映射 (喝水+活力, 饮食+经验)，支持多形态进化与互动反馈。</span>
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>✅ 任务与激励</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">每日挑战获取金币，排行榜激发竞争。</span>
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>🛍️ 虚拟商城</strong>
+                                <br><span style="color: #64748b; font-size: 0.9em;">消耗健康金币购买宠物装饰与道具，打造专属小猫。</span>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -296,7 +324,7 @@
                         <h3>🤔 不足与反思</h3>
                         <ul>
                             <li><strong>功能单一</strong>：目前仅支持饮食记录与简单互动，缺乏运动数据同步。</li>
-                            <li><strong>生态封闭</strong>：缺乏好友系统，用户容易产生“单机游戏”的孤独感。</li>
+                            
                             <li><strong>AI 精度</strong>：对于复杂中餐的卡路里估算仍有偏差。</li>
                         </ul>
                     </div>

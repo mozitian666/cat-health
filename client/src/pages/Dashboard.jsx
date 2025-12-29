@@ -1,20 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Flame, Zap, Droplet, Plus } from 'lucide-react';
+import { Flame, Zap, Droplet, Plus, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import DailyQuests from '../components/DailyQuests';
+import WeeklyReport from '../components/WeeklyReport';
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showReport, setShowReport] = useState(false);
+  const [reportData, setReportData] = useState(null);
+  const [reportLoading, setReportLoading] = useState(false);
 
   const fetchData = async () => {
     try {
       const res = await axios.get('/api/dashboard');
+      console.log('Dashboard Data:', res.data);
       setData(res.data);
     } catch (err) {
-      console.error(err);
+      console.error('Fetch Error:', err);
+      alert('Fetch Error: ' + err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleOpenReport = async () => {
+    setReportLoading(true);
+    try {
+        const res = await axios.get('/api/report/weekly');
+        setReportData(res.data);
+        setShowReport(true);
+    } catch (err) {
+        alert('生成周报失败');
+    } finally {
+        setReportLoading(false);
     }
   };
 
@@ -47,6 +67,18 @@ const Dashboard = () => {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900">你好, 主人 👋</h1>
+        </div>
+        <div className="flex gap-2">
+            <button 
+                onClick={handleOpenReport}
+                disabled={reportLoading}
+                className="bg-purple-50 p-2 rounded-xl text-purple-600 hover:bg-purple-100 transition relative"
+            >
+                {reportLoading ? <span className="text-sm animate-spin">⏳</span> : <FileText size={24} />}
+            </button>
+            <Link to="/leaderboard" className="bg-yellow-50 p-2 rounded-xl text-yellow-600 hover:bg-yellow-100 transition">
+                <span className="text-2xl">🏆</span>
+            </Link>
         </div>
       </div>
 
@@ -114,6 +146,9 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Daily Quests */}
+      <DailyQuests />
+
       {/* Today's Meals */}
       <div>
         <div className="flex justify-between items-center mb-4">
@@ -155,6 +190,8 @@ const Dashboard = () => {
           )}
         </div>
       </div>
+
+      {showReport && <WeeklyReport report={reportData} onClose={() => setShowReport(false)} />}
     </div>
   );
 };

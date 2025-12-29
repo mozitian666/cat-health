@@ -1,0 +1,34 @@
+const sequelize = require('../config/database');
+const User = require('./User');
+const DietRecord = require('./DietRecord');
+const CatState = require('./CatState');
+const QuestLog = require('./QuestLog');
+const Item = require('./Item');
+const Inventory = require('./Inventory');
+
+// Associations
+User.hasMany(DietRecord);
+DietRecord.belongsTo(User);
+
+User.hasOne(CatState);
+CatState.belongsTo(User);
+
+User.hasMany(QuestLog);
+QuestLog.belongsTo(User);
+
+User.belongsToMany(Item, { through: Inventory });
+Item.belongsToMany(User, { through: Inventory });
+User.hasMany(Inventory);
+Inventory.belongsTo(User);
+Item.hasMany(Inventory);
+Inventory.belongsTo(Item);
+
+module.exports = {
+  sequelize,
+  User,
+  DietRecord,
+  CatState,
+  QuestLog,
+  Item,
+  Inventory
+};

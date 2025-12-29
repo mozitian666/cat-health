@@ -29,6 +29,22 @@ const CatState = sequelize.define('CatState', {
   waterCount: {
     type: DataTypes.INTEGER,
     defaultValue: 0
+  },
+  coins: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  dailyWaterCount: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  lastActiveDate: {
+    type: DataTypes.DATEONLY, // YYYY-MM-DD
+    defaultValue: DataTypes.NOW
+  },
+  equippedItem: {
+    type: DataTypes.STRING, // Store JSON or simple ID/Icon of equipped item
+    allowNull: true
   }
 });
 
